@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Image Brightness Adjuster</title>
+    <style>
+        .container { max-width: 1200px; margin: 0 auto; padding: 20px; }
+        .row { display: flex; margin-bottom: 20px; }
+        .col { flex: 1; padding: 10px; }
+        img, .plot { max-width: 100%; border: 1px solid #ddd; }
+        .header { text-align: center; margin-bottom: 30px; }
+        form { background: #f9f9f9; padding: 20px; border-radius: 5px; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Image Brightness Adjuster</h1>
+            <p>Upload an image and adjust brightness (-100 to 100)</p>
+        </div>
+        
+        <form method="post" enctype="multipart/form-data">
+            <input type="file" name="image" accept="image/*" required>
+            <input type="number" name="brightness" min="-100" max="100" value="0" required>
+            <button type="submit">Process Image</button>
+        </form>
+        
+        {% if original %}
+        <div class="row">
+            <div class="col">
+                <h2>Original Image</h2>
+                <img src="{{ url_for('static', filename=original) }}">
+                <h3>Color Histogram</h3>
+                <img class="plot" src="{{ url_for('static', filename=hist_original) }}">
+            </div>
+            <div class="col">
+                <h2>Adjusted Image</h2>
+                <img src="{{ url_for('static', filename=adjusted) }}">
+                <h3>Color Histogram</h3>
+                <img class="plot" src="{{ url_for('static', filename=hist_adjusted) }}">
+            </div>
+        </div>
+        {% endif %}
+    </div>
+</body>
+</html>
